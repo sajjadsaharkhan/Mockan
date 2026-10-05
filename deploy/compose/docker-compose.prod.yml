@@ -40,6 +40,9 @@ services:
       MOCKAN_SESSION_SECRET: ${MOCKAN_SESSION_SECRET:?set MOCKAN_SESSION_SECRET in .env}
       MOCKAN_ADMIN_SSO_SUBJECTS: ${MOCKAN_ADMIN_SSO_SUBJECTS:?set MOCKAN_ADMIN_SSO_SUBJECTS in .env}
       MOCKAN_MIGRATE_ON_STARTUP: "false"
+      # The Admin builds the OIDC redirect URI from the request, so it must trust the scheme and host
+      # the proxy chain forwards (its only clients are the nginx containers; port 8081 is not published).
+      FORWARDED_ALLOW_IPS: "*"
     restart: unless-stopped
     logging: *default-logging
 
